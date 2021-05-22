@@ -12,7 +12,7 @@ import { UserRoles } from '../../user/user.roles.enum';
 @Entity()
 @Unique(['UserName'])
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('increment')
   Id: number;
 
   @Column()
