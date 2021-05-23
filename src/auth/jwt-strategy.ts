@@ -11,21 +11,19 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-
       secretOrKey: '!learning',
     });
   }
 
   async validate(Email: any) {
-    console.log('payload-->', Email);
+    const user = await this.userRepository.getUser(Email);
 
-    const user = await this.userRepository.findOne({ Email });
+    console.log('user', user);
 
     if (!user) {
       throw new UnauthorizedException('Not authorized');
     }
 
-    console.log(user);
     return user;
   }
 }

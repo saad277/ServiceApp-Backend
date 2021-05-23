@@ -12,6 +12,7 @@ import { ApiBody, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { LoginCredentialsDto, UserAuthCredentialsDto } from './dto';
 import { LoginBody, SignUpBody } from '../swagger';
 import { JwtAuthGuard } from '../guards/jwt-auth-guard';
+import { GetUser } from '../decorators/get-user.decorator';
 
 @ApiBearerAuth('JWT-auth')
 @ApiTags('Auth')
@@ -33,7 +34,7 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get('/user/me')
-  getMe(@Request() req) {
-    //  console.log('req', req.headers);
+  getMe(@GetUser() user) {
+    return user;
   }
 }

@@ -36,6 +36,15 @@ export class UserRepository extends Repository<User> {
     }
   }
 
+  async getUser(Email: any): Promise<User> {
+    const user = await this.createQueryBuilder('user')
+      .where('user.Email = :Email', { Email })
+      .select(['user.Id', 'user.UserName', 'user.Email', 'user.Type'])
+      .getOne();
+
+    return user;
+  }
+
   async validateUserPassword(
     loginCredentials: LoginCredentialsDto,
   ): Promise<string> {
