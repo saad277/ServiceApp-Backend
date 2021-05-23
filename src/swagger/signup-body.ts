@@ -33,7 +33,4 @@ export class SignUpBody {
 
   @ApiProperty()
   ProfileImg: string;
-
-  @ApiProperty()
-  IsVendor: boolean;
 }
