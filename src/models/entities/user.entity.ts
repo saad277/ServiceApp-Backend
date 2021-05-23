@@ -10,7 +10,7 @@ import * as bcrypt from 'bcrypt';
 import { UserRoles } from '../../user/user.roles.enum';
 
 @Entity()
-@Unique(['UserName'])
+@Unique(['UserName', 'Email'])
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   Id: number;
@@ -24,7 +24,7 @@ export class User extends BaseEntity {
   @Column()
   Password: string;
 
-  @Column({ type: 'enum', enum: UserRoles })
+  @Column()
   Type: UserRoles;
 
   @Column()

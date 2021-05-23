@@ -27,7 +27,6 @@ export class UserRepository extends Repository<User> {
 
     try {
       await user.save();
-
       return { Message: 'User Created Successfully' };
     } catch (err) {
       if (err.code === 23505) {
@@ -38,9 +37,17 @@ export class UserRepository extends Repository<User> {
     }
   }
 
-  async validateUserPassword(loginCredentials: LoginCredentialsDto) {
+  async validateUserPassword(
+    loginCredentials: LoginCredentialsDto,
+  ): Promise<string> {
     const { Email, Password } = loginCredentials;
 
     const user = await this.findOne({ Email });
+
+    if (user && (await user.validatePassword(Password))) {
+      return user.UserName;
+    } else {
+      return null;
+    }
   }
 }

@@ -8,8 +8,10 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   password: 'click123',
   database: 'service_app',
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-  synchronize: true,
-  migrations: ['dist/migrations/*{.ts,.js}'],
-  migrationsTableName: 'user',
-  migrationsRun: true,
+  synchronize: false,
+  migrationsTableName: 'custom_migration_table',
+  migrations: ['migration/*.js'],
+  cli: {
+    migrationsDir: 'migration',
+  },
 };

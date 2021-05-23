@@ -5,8 +5,10 @@ import {
   Matches,
   IsNumber,
   IsEmail,
+  IsEnum,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { UserRoles } from '../../user/user.roles.enum';
 
 export class UserAuthCredentialsDto {
   @ApiProperty()
@@ -29,6 +31,7 @@ export class UserAuthCredentialsDto {
   Password: string;
 
   @ApiProperty()
+  @IsEnum(UserRoles)
   @IsNumber()
   Type: number;
 }
