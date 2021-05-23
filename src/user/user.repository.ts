@@ -1,5 +1,4 @@
 import { Repository, EntityRepository } from 'typeorm';
-import { Res, HttpStatus } from '@nestjs/common';
 import { User } from '../models/entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import {
@@ -45,7 +44,7 @@ export class UserRepository extends Repository<User> {
     const user = await this.findOne({ Email });
 
     if (user && (await user.validatePassword(Password))) {
-      return user.UserName;
+      return user.Email;
     } else {
       return null;
     }

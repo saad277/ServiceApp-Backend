@@ -2,26 +2,22 @@ import {
   IsString,
   MinLength,
   MaxLength,
-  Matches,
+  //Matches,
   IsNumber,
   IsEmail,
   IsEnum,
 } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
 import { UserRoles } from '../../user/user.roles.enum';
 
 export class UserAuthCredentialsDto {
-  @ApiProperty()
   @IsString()
   @MinLength(4)
   @MaxLength(20)
   UserName: string;
 
-  @ApiProperty()
   @IsEmail()
   Email: string;
 
-  @ApiProperty()
   @IsString()
   @MinLength(6)
   @MaxLength(20)
@@ -30,7 +26,6 @@ export class UserAuthCredentialsDto {
   //   })
   Password: string;
 
-  @ApiProperty()
   @IsEnum(UserRoles)
   @IsNumber()
   Type: number;

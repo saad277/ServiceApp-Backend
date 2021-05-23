@@ -4,10 +4,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { UserRepository } from '../user/user.repository';
 
-export interface JwtPayload {
-  UserName: string;
-}
-
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
@@ -15,24 +11,21 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+
       secretOrKey: '!learning',
     });
   }
 
-  async validate(payload: JwtPayload) {
-    const { UserName } = payload;
+  async validate(Email: any) {
+    console.log('payload-->', Email);
 
-    console.log(UserName);
-  }
+    const user = await this.userRepository.findOne({ Email });
 
-  async login(user: any) {
-   
-  //  const payload = { username: user.username, sub: user.userId };
+    if (!user) {
+      throw new UnauthorizedException('Not authorized');
+    }
 
-    console.log(user)
-
-    // return {
-    //   access_token: this.jwtService.sign(payload),
-    // };
+    console.log(user);
+    return user;
   }
 }

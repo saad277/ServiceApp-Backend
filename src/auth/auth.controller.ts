@@ -1,19 +1,39 @@
-import { Controller, Post, Body, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  ValidationPipe,
+  Get,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UserAuthCredentialsDto } from './dto/auth-credentials-dto';
-import { LoginCredentialsDto } from './dto/login-credentials-dto';
+import { ApiBody, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { LoginCredentialsDto, UserAuthCredentialsDto } from './dto';
+import { LoginBody, SignUpBody } from '../swagger';
+import { JwtAuthGuard } from '../guards/jwt-auth-guard';
 
-@Controller('auth')
+@ApiBearerAuth('JWT-auth')
+@ApiTags('Auth')
+@Controller('')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  @ApiBody({ type: SignUpBody })
   @Post('/user/signUp')
   userSignUp(@Body(ValidationPipe) authCredentailsDto: UserAuthCredentialsDto) {
     return this.authService.userSignUp(authCredentailsDto);
   }
 
+  @ApiBody({ type: LoginBody })
   @Post('/user/login')
   userLogin(@Body(ValidationPipe) loginCredentials: LoginCredentialsDto) {
     return this.authService.userLogin(loginCredentials);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/user/me')
+  getMe(@Request() req) {
+    //  console.log('req', req.headers);
   }
 }

@@ -17,15 +17,15 @@ export class AuthService {
   }
 
   async userLogin(loginCredentials: LoginCredentialsDto) {
-    const UserName = await this.userRepository.validateUserPassword(
+    const Email = await this.userRepository.validateUserPassword(
       loginCredentials,
     );
 
-    if (!UserName) {
+    if (!Email) {
       throw new UnauthorizedException('Unauthorized Exception');
     }
 
-    const accessToken = await this.jwtService.sign(UserName);
+    const accessToken = await this.jwtService.sign(Email);
 
     return { Token: accessToken };
   }
