@@ -9,4 +9,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   database: 'service_app',
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   synchronize: true,
+  migrations: ['dist/migrations/*{.ts,.js}'],
+  migrationsTableName: 'user',
+  migrationsRun: true,
 };
