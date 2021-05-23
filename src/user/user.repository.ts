@@ -61,7 +61,20 @@ export class UserRepository extends Repository<User> {
   async getUser(Email: any): Promise<User> {
     const user = await this.createQueryBuilder('user')
       .where('user.Email = :Email', { Email })
-      .select(['user.Id', 'user.UserName', 'user.Email', 'user.Type'])
+      .select([
+        'user.Id',
+        'user.UserName',
+        'user.Email',
+        'user.Type',
+        'user.Contact',
+        'user.Country',
+        'user.City',
+        'user.Language',
+        'user.Location',
+        'user.Age',
+        'user.IsVendor',
+        'user.ProfileImg',
+      ])
       .getOne();
 
     return user;
