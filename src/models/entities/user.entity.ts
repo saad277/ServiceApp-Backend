@@ -27,6 +27,30 @@ export class User extends BaseEntity {
   @Column()
   Type: UserRoles;
 
+  @Column('simple-json')
+  Location: { Lat: number; Long: number };
+
+  @Column()
+  Contact: string;
+
+  @Column()
+  Age: string;
+
+  @Column()
+  Language: string;
+
+  @Column()
+  Country: string;
+
+  @Column()
+  City: string;
+
+  @Column()
+  ProfileImg: string;
+
+  @Column({ default: null })
+  IsVendor: boolean ;
+
   @Column()
   Salt: string;
 

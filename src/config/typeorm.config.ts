@@ -14,7 +14,7 @@ export default class TypeOrmConfig {
       password: configService.get('DATA_BASE_PASSWORD'),
       database: configService.get('DATA_BASE_NAME'),
       entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-      synchronize: false,
+      synchronize: true,
       migrationsTableName: 'custom_migration_table',
       migrations: ['migration/*.js'],
       cli: {
