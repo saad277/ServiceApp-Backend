@@ -1,17 +1,34 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import {
+  TypeOrmModuleOptions,
+  TypeOrmModuleAsyncOptions,
+} from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
-export const typeOrmConfig: TypeOrmModuleOptions = {
-  type: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  username: 'postgres',
-  password: 'click123',
-  database: 'service_app',
-  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-  synchronize: false,
-  migrationsTableName: 'custom_migration_table',
-  migrations: ['migration/*.js'],
-  cli: {
-    migrationsDir: 'migration',
-  },
+export default class TypeOrmConfig {
+  static getOrmConfig(configService: ConfigService): TypeOrmModuleOptions {
+    return {
+      type: 'postgres',
+      host: configService.get('DATA_BASE_HOST'),
+      port: configService.get('DATA_BASE_PORT'),
+      username: configService.get('DATA_BASE_USERNAME'),
+      password: configService.get('DATA_BASE_PASSWORD'),
+      database: configService.get('DATA_BASE_NAME'),
+      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      synchronize: false,
+      migrationsTableName: 'custom_migration_table',
+      migrations: ['migration/*.js'],
+      cli: {
+        migrationsDir: 'migration',
+      },
+    };
+  }
+}
+
+export const typeOrmConfig: TypeOrmModuleAsyncOptions = {
+  imports: [ConfigModule],
+  inject: [ConfigService],
+
+  useFactory: async (
+    configService: ConfigService,
+  ): Promise<TypeOrmModuleOptions> => TypeOrmConfig.getOrmConfig(configService),
 };
