@@ -20,6 +20,10 @@ export default class TypeOrmConfig {
       cli: {
         migrationsDir: 'migration',
       },
+      ssl:
+        process.env.NODE_ENV === 'production'
+          ? { rejectUnauthorized: false }
+          : false,
     };
   }
 }
