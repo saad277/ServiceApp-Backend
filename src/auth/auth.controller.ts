@@ -1,6 +1,7 @@
 import {
   Controller,
   Post,
+  Patch,
   Body,
   ValidationPipe,
   Get,
@@ -30,6 +31,19 @@ export class AuthController {
   @Post('/user/login')
   userLogin(@Body(ValidationPipe) loginCredentials: LoginCredentialsDto) {
     return this.authService.userLogin(loginCredentials);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/verify/getCode')
+  verify(@GetUser() user) {
+    return this.authService.setVerifyCode(user.Id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/verify/code')
+  verifyCode(@Body() body, @GetUser() user) {
+    console.log('user', user);
+    console.log('body', body);
   }
 
   @UseGuards(JwtAuthGuard)

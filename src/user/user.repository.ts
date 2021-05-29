@@ -12,36 +12,16 @@ import { hashPassword } from '../utils/hashPasswordUtils';
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
   async SignUp(authCredentials: UserAuthCredentialsDto) {
-    const {
-      UserName,
-      Password,
-      Email,
-      Type,
-      Age,
-      Location,
-      Contact,
-      Language,
-      Country,
-      City,
-      ProfileImg,
-    } = authCredentials;
+    const { UserName, Password, Email, Type, Contact } = authCredentials;
 
     const user = new User();
 
     user.UserName = UserName;
     user.Type = Type;
     user.Email = Email;
-    user.Age = Age;
-    user.Location = Location;
     user.Contact = Contact;
-    user.Language = Language;
-    user.Country = Country;
-    user.City = City;
-    user.ProfileImg = ProfileImg;
-
     const salt = await bcrypt.genSalt();
     user.Salt = salt;
-
     user.Password = await hashPassword(Password, salt);
 
     try {
@@ -50,7 +30,7 @@ export class UserRepository extends Repository<User> {
     } catch (err) {
       console.log(err);
 
-      if (err.code === 23505) {
+      if (err.code == 23505) {
         throw new ConflictException('User already exists');
       } else {
         throw new InternalServerErrorException();
@@ -74,6 +54,7 @@ export class UserRepository extends Repository<User> {
         'user.Age',
         'user.IsVendor',
         'user.ProfileImg',
+        'user.Status',
       ])
       .getOne();
 

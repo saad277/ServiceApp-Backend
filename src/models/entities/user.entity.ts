@@ -8,6 +8,7 @@ import {
 import * as bcrypt from 'bcrypt';
 
 import { UserRoles } from '../../user/user.roles.enum';
+import { UserStatus } from '../../user/user.status.enum';
 
 @Entity()
 @Unique(['UserName', 'Email'])
@@ -24,32 +25,35 @@ export class User extends BaseEntity {
   @Column()
   Password: string;
 
+  @Column({ default: UserStatus.PendingVerification })
+  Status: UserStatus;
+
   @Column()
   Type: UserRoles;
 
-  @Column('simple-json')
+  @Column('simple-json', { default: null })
   Location: { Lat: number; Long: number };
 
   @Column()
   Contact: string;
 
-  @Column()
+  @Column({ default: null })
   Age: string;
 
-  @Column()
+  @Column({ default: null })
   Language: string;
 
-  @Column()
+  @Column({ default: null })
   Country: string;
 
-  @Column()
+  @Column({ default: null })
   City: string;
 
-  @Column()
+  @Column({ default: null })
   ProfileImg: string;
 
   @Column({ default: null })
-  IsVendor: boolean ;
+  IsVendor: boolean;
 
   @Column()
   Salt: string;
