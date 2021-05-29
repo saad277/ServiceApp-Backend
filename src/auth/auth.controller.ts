@@ -42,9 +42,8 @@ export class AuthController {
   @Post('/verify/confirmCode')
   verifyCode(@Body() body, @GetUser() user) {
     const { Code } = body;
-    const { Id } = user;
 
-    return this.authService.confirmVerifyCode(Id, Code);
+    return this.authService.confirmVerifyCode(user, Code);
   }
 
   @UseGuards(JwtAuthGuard)

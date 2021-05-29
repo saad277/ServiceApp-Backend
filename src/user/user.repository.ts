@@ -8,6 +8,7 @@ import {
 import { UserAuthCredentialsDto } from '../auth/dto/auth-credentials-dto';
 import { LoginCredentialsDto } from '../auth/dto/login-credentials-dto';
 import { hashPassword } from '../utils/hashPasswordUtils';
+import { UserStatus } from './user.status.enum';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
@@ -39,11 +40,15 @@ export class UserRepository extends Repository<User> {
   }
 
   async updateUser(data, user: User) {
-    
     if (data && Boolean(Object.keys(data).length)) {
       await this.createQueryBuilder('user')
         .update(User)
-        .set({ ...data })
+        .set({
+          ...data,
+          ...(user.Status === UserStatus.PendingVerification && {
+            Status: UserStatus.Active,
+          }),
+        })
         .where('Id = :Id', { Id: user.Id })
         .execute();
     }

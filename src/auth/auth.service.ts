@@ -8,6 +8,7 @@ import { UserRepository } from '../user/user.repository';
 import { UserAuthCredentialsDto } from './dto/auth-credentials-dto';
 import { JwtService } from '@nestjs/jwt';
 import { LoginCredentialsDto } from './dto/login-credentials-dto';
+import { UserStatus } from '../user/user.status.enum';
 import { redis } from '../redis';
 import { randomInteger } from '../utils/generateRandomCode';
 
@@ -42,8 +43,8 @@ export class AuthService {
     return { Message: 'Verification Code Sent' };
   }
 
-  async confirmVerifyCode(userId, verifyCode) {
-    let storedCode = await redis.get(userId);
+  async confirmVerifyCode(user, verifyCode) {
+    let storedCode = await redis.get(user.Id);
 
     if (Boolean(verifyCode == storedCode)) {
       return { Message: 'Verification SuccessFul' };
