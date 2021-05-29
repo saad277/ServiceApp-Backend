@@ -41,7 +41,7 @@ export class AuthController {
 
   @ApiBody({ type: VerifyCodeBody })
   @UseGuards(JwtAuthGuard)
-  @Post('/verify/code')
+  @Post('/verify/confirmCode')
   verifyCode(@Body() body, @GetUser() user) {
     const { Code } = body;
     const { Id } = user;
