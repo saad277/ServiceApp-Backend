@@ -11,7 +11,7 @@ import {
 import { AuthService } from './auth.service';
 import { ApiBody, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { LoginCredentialsDto, UserAuthCredentialsDto } from './dto';
-import { LoginBody, SignUpBody } from '../swagger';
+import { LoginBody, SignUpBody, VerifyCodeBody } from '../swagger';
 import { JwtAuthGuard } from '../guards/jwt-auth-guard';
 import { GetUser } from '../decorators/get-user.decorator';
 
@@ -39,12 +39,14 @@ export class AuthController {
     return this.authService.setVerifyCode(user.Id);
   }
 
+  @ApiBody({ type: VerifyCodeBody })
   @UseGuards(JwtAuthGuard)
   @Post('/verify/code')
   verifyCode(@Body() body, @GetUser() user) {
-    
+    const { Code } = body;
+    const { Id } = user;
 
-    
+    return this.authService.confirmVerifyCode(Id, Code);
   }
 
   @UseGuards(JwtAuthGuard)

@@ -43,10 +43,10 @@ export class AuthService {
   }
 
   async confirmVerifyCode(userId, verifyCode) {
-    let isVerified = redis.get(userId, verifyCode);
+    let storedCode = await redis.get(userId);
 
-    if (Boolean(isVerified)) {
-      return { Message: 'User' };
+    if (Boolean(verifyCode == storedCode)) {
+      return { Message: 'Verification SuccessFul' };
     }
 
     throw new NotFoundException('Invalid or Expired Verification Code');
