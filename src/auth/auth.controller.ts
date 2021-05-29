@@ -42,8 +42,9 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Post('/verify/code')
   verifyCode(@Body() body, @GetUser() user) {
-    console.log('user', user);
-    console.log('body', body);
+    
+
+    
   }
 
   @UseGuards(JwtAuthGuard)
