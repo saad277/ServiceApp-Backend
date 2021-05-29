@@ -28,7 +28,7 @@ export class AuthService {
     );
 
     if (!Email) {
-      throw new UnauthorizedException('Unauthorized Exception');
+      throw new UnauthorizedException('Invalid Email Or Password');
     }
 
     const accessToken = await this.jwtService.sign(Email);

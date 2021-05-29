@@ -32,32 +32,8 @@ export class UserAuthCredentialsDto {
   @IsNumber()
   Type: number;
 
-  // @IsObject()
-  // Location: { Lat: number; Long: number };
-
   @IsString()
   @MinLength(10)
   @MaxLength(20)
   Contact: string;
-
-  // @IsString()
-  // @MinLength(1)
-  // @MaxLength(2)
-  // Age: string;
-
-  // @IsString()
-  // @MinLength(1)
-  // Language: string;
-
-  // @IsString()
-  // @MinLength(1)
-  // Country: string;
-
-  // @IsString()
-  // @MinLength(1)
-  // City: string;
-
-  // @IsString()
-  // @MinLength(1)
-  // ProfileImg: string;
 }

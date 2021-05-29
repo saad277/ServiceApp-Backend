@@ -38,6 +38,21 @@ export class UserRepository extends Repository<User> {
     }
   }
 
+  async updateUser(data, user: User) {
+    
+    if (data && Boolean(Object.keys(data).length)) {
+      await this.createQueryBuilder('user')
+        .update(User)
+        .set({ ...data })
+        .where('Id = :Id', { Id: user.Id })
+        .execute();
+    }
+
+    const updatedUser = await this.getUser(user.Email);
+
+    return { Message: 'User Profile Updated', User: updatedUser };
+  }
+
   async getUser(Email: any): Promise<User> {
     const user = await this.createQueryBuilder('user')
       .where('user.Email = :Email', { Email })

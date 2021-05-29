@@ -9,5 +9,7 @@ export class UserService {
     @InjectRepository(UserRepository) private userRepository: UserRepository,
   ) {}
 
-  async userUpdateProifle() {}
+  async userUpdateProfile(data, user: User) {
+    return this.userRepository.updateUser(data, user);
+  }
 }
