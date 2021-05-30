@@ -38,7 +38,8 @@ export class AuthService {
   }
 
   async setVerifyCode(userId) {
-    let verifyCode = randomInteger(4);
+    // let verifyCode = randomInteger(4);
+    let verifyCode = 1111;
     redis.set(userId, verifyCode, 'ex', 60);
     return { Message: 'Verification Code Sent' };
   }
