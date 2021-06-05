@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Post,
-  Body,
-  ValidationPipe,
-  Get,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiBody, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { LoginCredentialsDto, UserAuthCredentialsDto } from './dto';
@@ -21,13 +14,13 @@ export class AuthController {
 
   @ApiBody({ type: SignUpBody })
   @Post('/user/signUp')
-  userSignUp(@Body(ValidationPipe) authCredentailsDto: UserAuthCredentialsDto) {
+  userSignUp(@Body() authCredentailsDto: UserAuthCredentialsDto) {
     return this.authService.userSignUp(authCredentailsDto);
   }
 
   @ApiBody({ type: LoginBody })
   @Post('/user/login')
-  userLogin(@Body(ValidationPipe) loginCredentials: LoginCredentialsDto) {
+  userLogin(@Body() loginCredentials: LoginCredentialsDto) {
     return this.authService.userLogin(loginCredentials);
   }
 
