@@ -12,4 +12,8 @@ export class UserService {
   async userUpdateProfile(data, user: User) {
     return this.userRepository.updateUser(data, user);
   }
+
+  async getUser(user) {
+    return this.userRepository.getUser(user);
+  }
 }

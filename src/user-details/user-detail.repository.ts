@@ -1,6 +1,5 @@
 import { Repository, EntityRepository, Entity } from 'typeorm';
 import { UserDetails } from '../entities/user.details.entity';
-import * as bcrypt from 'bcrypt';
 import {
   ConflictException,
   InternalServerErrorException,
@@ -12,8 +11,25 @@ export class UserDetailsRepository extends Repository<UserDetails> {
     const userDetails = new UserDetails();
     userDetails.UserId = userId;
 
-    await userDetails.save();
+    try {
+      await userDetails.save();
+      return { Status: 200, Message: 'Profile Created Successfully' };
+    } catch (err) {
+      throw new InternalServerErrorException();
+    }
+  }
 
-    return { Status: 200, Message: 'Profile Created Successfully' };
+  async updateProfile(body, user) {
+    if (body && Boolean(Object.keys(body).length)) {
+      await this.createQueryBuilder('user_details')
+        .update(UserDetails)
+        .set({
+          ...body,
+        })
+        .where('UserId = :UserId', { UserId: user.Id })
+        .execute();
+    }
+
+    return { Message: 'User Profile Updated' };
   }
 }

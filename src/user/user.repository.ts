@@ -58,22 +58,15 @@ export class UserRepository extends Repository<User> {
     return { Message: 'User Profile Updated', User: updatedUser };
   }
 
-  async getUser(Email: any): Promise<User> {
+  async getUser(currentUser): Promise<User> {
     const user = await this.createQueryBuilder('user')
-      .where('user.Email = :Email', { Email })
+      .where('user.Email = :Email', { Email: currentUser.Email })
       .select([
         'user.Id',
         'user.UserName',
         'user.Email',
         'user.Type',
         'user.Contact',
-        'user.Country',
-        'user.City',
-        'user.Language',
-        'user.Location',
-        'user.Age',
-        'user.IsVendor',
-        'user.ProfileImg',
         'user.Status',
       ])
       .getOne();

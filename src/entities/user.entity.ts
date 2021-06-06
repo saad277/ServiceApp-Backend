@@ -5,6 +5,7 @@ import {
   PrimaryGeneratedColumn,
   Unique,
   JoinColumn,
+  JoinTable,
   OneToOne,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
@@ -21,6 +22,10 @@ export class User extends BaseEntity {
 
   @Column()
   UserName: string;
+
+  @OneToOne(() => UserDetails, (userDetails: UserDetails) => userDetails)
+  @JoinColumn()
+  Details: UserDetails;
 
   @Column()
   Email: string;
