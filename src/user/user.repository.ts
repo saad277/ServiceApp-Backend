@@ -1,5 +1,5 @@
 import { Repository, EntityRepository } from 'typeorm';
-import { User } from '../models/entities/user.entity';
+import { User } from '../entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import {
   ConflictException,
@@ -27,7 +27,7 @@ export class UserRepository extends Repository<User> {
 
     try {
       await user.save();
-      return { Message: 'User Created Successfully' };
+      return user;
     } catch (err) {
       console.log(err);
 

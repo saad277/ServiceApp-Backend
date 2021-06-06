@@ -4,11 +4,14 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Unique,
+  JoinColumn,
+  OneToOne,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
-import { UserRoles } from '../../user/user.roles.enum';
-import { UserStatus } from '../../user/user.status.enum';
+import { UserRoles } from '../user/user.roles.enum';
+import { UserStatus } from '../user/user.status.enum';
+import { UserDetails } from './user.details.entity';
 
 @Entity()
 @Unique(['UserName', 'Email'])
@@ -31,29 +34,8 @@ export class User extends BaseEntity {
   @Column()
   Type: UserRoles;
 
-  @Column('simple-json', { default: null })
-  Location: { Lat: number; Long: number };
-
   @Column()
   Contact: string;
-
-  @Column({ default: null })
-  Age: string;
-
-  @Column({ default: null })
-  Language: string;
-
-  @Column({ default: null })
-  Country: string;
-
-  @Column({ default: null })
-  City: string;
-
-  @Column({ default: null })
-  ProfileImg: string;
-
-  @Column({ default: null })
-  IsVendor: boolean;
 
   @Column()
   Salt: string;
