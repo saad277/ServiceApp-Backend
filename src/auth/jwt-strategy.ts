@@ -5,11 +5,14 @@ import { Strategy, ExtractJwt } from 'passport-jwt';
 import { UserDetails } from 'src/entities/user.details.entity';
 import { UserRoles } from 'src/user/user.roles.enum';
 import { UserRepository } from '../user/user.repository';
+import { UserDetailsRepository } from '../user-details/user-detail.repository';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     @InjectRepository(UserRepository) private userRepository: UserRepository,
+    @InjectRepository(UserDetailsRepository)
+    private userDetailsRepository: UserDetailsRepository,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -18,30 +21,33 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(Email: any) {
-    const user = await this.userRepository.findOne({ Email });
+    let details = {};
 
+    const user = await this.userRepository
+      .createQueryBuilder('user')
+      .where('user.Email = :Email', { Email })
+      .select([
+        'user.Id',
+        'user.UserName',
+        'user.Email',
+        'user.Type',
+        'user.Contact',
+        'user.Status',
+      ])
+      .getOne();
+
+    // .leftJoinAndMapOne('User.Details', 'user_details', 'd', 'd.UserId::varchar=user.Id')
     if (user.Type === UserRoles.Customer) {
-      const user = await this.userRepository
-        .createQueryBuilder('user')
-        .where('user.Email = :Email', { Email })
-        .select([
-          'user.Id',
-          'user.UserName',
-          'user.Email',
-          'user.Type',
-          'user.Contact',
-          'user.Status',
-        ])
-        .leftJoinAndSelect('user.Details', 'Details')
+      details = await this.userDetailsRepository
+        .createQueryBuilder('user_details')
+        .where('user_details.UserId = :UserId', { UserId: user.Id })
         .getOne();
-
-      return user;
     }
 
     if (!user) {
       throw new UnauthorizedException('Not authorized');
     }
 
-    return user;
+    return { ...details, ...user };
   }
 }

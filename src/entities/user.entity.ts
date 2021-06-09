@@ -23,10 +23,6 @@ export class User extends BaseEntity {
   @Column()
   UserName: string;
 
-  @OneToOne(() => UserDetails, (userDetails: UserDetails) => userDetails)
-  @JoinColumn()
-  Details: UserDetails;
-
   @Column()
   Email: string;
 

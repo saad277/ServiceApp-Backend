@@ -13,9 +13,7 @@ export class UserDetails extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   Id: number;
 
-  @OneToOne(() => User, (user: User) => user)
-  Details: User;
-
+  @OneToOne(() => User, (user: User) => user.Id)
   @Column({ default: null })
   UserId: string;
 

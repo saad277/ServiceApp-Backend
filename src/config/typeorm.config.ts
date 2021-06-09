@@ -16,6 +16,7 @@ export default class TypeOrmConfig {
       entities: [__dirname + '/../**/*.entity{.ts,.js}'],
       synchronize: true,
       migrationsRun: true,
+     // logging: true,
       migrationsTableName: 'custom_migration_table',
       migrations: ['migration/*.js'],
       cli: {

@@ -32,4 +32,12 @@ export class UserDetailsRepository extends Repository<UserDetails> {
 
     return { Message: 'User Profile Updated' };
   }
+
+  async getDetails(userId) {
+    const details = await this.createQueryBuilder('user_details')
+      .where('user_details.UserId = :UserId', { UserId: userId })
+      .getOne();
+
+    return details;
+  }
 }
