@@ -24,20 +24,20 @@ export class AuthController {
     return this.authService.userLogin(loginCredentials);
   }
 
-  // @UseGuards(JwtAuthGuard)
-  // @Get('/verify/getCode')
-  // verify(@GetUser() user) {
-  //   return this.authService.setVerifyCode(user.Id);
-  // }
+  @UseGuards(JwtAuthGuard)
+  @Get('/verify/getCode')
+  verify(@GetUser() user) {
+    return this.authService.setVerifyCode(user.Id);
+  }
 
-  // @ApiBody({ type: VerifyCodeBody })
-  // @UseGuards(JwtAuthGuard)
-  // @Post('/verify/confirmCode')
-  // verifyCode(@Body() body, @GetUser() user) {
-  //   const { Code } = body;
+  @ApiBody({ type: VerifyCodeBody })
+  @UseGuards(JwtAuthGuard)
+  @Post('/verify/confirmCode')
+  verifyCode(@Body() body, @GetUser() user) {
+    const { Code } = body;
 
-  //   return this.authService.confirmVerifyCode(user, Code);
-  // }
+    return this.authService.confirmVerifyCode(user, Code);
+  }
 
   @UseGuards(JwtAuthGuard)
   @Get('/user/me')

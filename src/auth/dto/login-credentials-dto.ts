@@ -6,7 +6,4 @@ export class LoginCredentialsDto {
 
   @IsString()
   Password: string;
-
-  @IsNumber()
-  Type: number;
 }

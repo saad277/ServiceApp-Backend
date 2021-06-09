@@ -6,7 +6,4 @@ export class LoginBody {
 
   @ApiProperty()
   Password: string;
-
-  @ApiProperty()
-  Type: number;
 }

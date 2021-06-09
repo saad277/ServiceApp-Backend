@@ -51,7 +51,7 @@ export class AuthService {
     let storedCode = await redis.get(user.Id);
 
     if (Boolean(verifyCode == storedCode)) {
-      return { Message: 'Verification SuccessFul' };
+      return { Message: 'Verification SuccessFull' };
     }
 
     throw new NotFoundException('Invalid or Expired Verification Code');
