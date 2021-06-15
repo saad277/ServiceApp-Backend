@@ -36,12 +36,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       ])
       .getOne();
 
-    // .leftJoinAndMapOne('User.Details', 'user_details', 'd', 'd.UserId::varchar=user.Id')
     if (user.Type === UserRoles.Customer) {
-      details = await this.userDetailsRepository
-        .createQueryBuilder('user_details')
-        .where('user_details.UserId = :UserId', { UserId: user.Id })
-        .getOne();
+      details = await this.userDetailsRepository.getDetails(user.Id);
     }
 
     if (!user) {
