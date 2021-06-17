@@ -9,6 +9,7 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UserDetailsService } from '../user-details/user-details.service';
 import { JwtStrategy } from './jwt-strategy';
+import { FacebookStrategy } from './facebook-strategy';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { JwtStrategy } from './jwt-strategy';
     TypeOrmModule.forFeature([UserRepository, UserDetailsRepository]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, UserDetailsService],
+  providers: [AuthService, JwtStrategy, FacebookStrategy, UserDetailsService],
   exports: [JwtStrategy, PassportModule],
 })
 export class AuthModule {}

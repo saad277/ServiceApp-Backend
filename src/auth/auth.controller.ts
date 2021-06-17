@@ -1,4 +1,5 @@
-import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, Req } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { ApiBody, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { LoginCredentialsDto, UserAuthCredentialsDto } from './dto';
@@ -11,6 +12,12 @@ import { GetUser } from '../decorators/get-user.decorator';
 @Controller('')
 export class AuthController {
   constructor(private authService: AuthService) {}
+
+  @UseGuards(AuthGuard('facebook-token'))
+  @Get('facebook')
+  async getTokenAfterFacebookSignIn(@Req() req) {
+    console.log(req.user);
+  }
 
   @ApiBody({ type: SignUpBody })
   @Post('/user/signUp')
