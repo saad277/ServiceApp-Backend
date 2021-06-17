@@ -10,6 +10,7 @@ import { UserAuthCredentialsDto } from './dto/auth-credentials-dto';
 import { JwtService } from '@nestjs/jwt';
 import { LoginCredentialsDto } from './dto/login-credentials-dto';
 import { UserStatus } from '../user/user.status.enum';
+import { UserRoles } from '../user/user.roles.enum';
 import { redis } from '../redis';
 import { randomInteger } from '../utils/generateRandomCode';
 
@@ -23,6 +24,11 @@ export class AuthService {
 
   async userSignUp(authCredentailsDto: UserAuthCredentialsDto) {
     const response = await this.userRepository.SignUp(authCredentailsDto);
+
+    if (response.Type === UserRoles.Admin) {
+      return { Status: 200, Message: 'Profile Created Successfully' };
+    }
+
     return this.userDetailsService.createEntry(response.Id);
   }
 
