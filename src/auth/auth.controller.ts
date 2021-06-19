@@ -13,11 +13,11 @@ import { GetUser } from '../decorators/get-user.decorator';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @UseGuards(AuthGuard('facebook-token'))
-  @Get('facebook')
-  async getTokenAfterFacebookSignIn(@Req() req) {
-    console.log(req.user);
-  }
+  // @UseGuards(AuthGuard('facebook-token'))
+  // @Get('facebook')
+  // async getTokenAfterFacebookSignIn(@Req() req) {
+  //   console.log(req.user);
+  // }
 
   @ApiBody({ type: SignUpBody })
   @Post('/user/signUp')

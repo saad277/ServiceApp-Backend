@@ -8,7 +8,6 @@ import {
 import { UserAuthCredentialsDto } from '../auth/dto/auth-credentials-dto';
 import { LoginCredentialsDto } from '../auth/dto/login-credentials-dto';
 import { hashPassword } from '../utils/hashPasswordUtils';
-import { UserStatus } from './user.status.enum';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
