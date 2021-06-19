@@ -19,3 +19,8 @@ export class UpdateUserProfileBody {
   @ApiProperty()
   Location: { Lat: number; Long: number };
 }
+
+export class UpdateUserStatusBody {
+  @ApiProperty()
+  Status: number;
+}

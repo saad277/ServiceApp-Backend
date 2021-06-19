@@ -8,6 +8,8 @@ import {
   IsEnum,
 } from 'class-validator';
 
+import { UserStatus } from '../user.status.enum';
+
 export class UpdateUserProfileDto {
   @IsString()
   @MinLength(1)
@@ -38,4 +40,10 @@ export class UpdateUserProfileDto {
   @IsObject()
   @IsOptional()
   Location: { Lat: number; Long: number };
+}
+
+export class UpdateStatusDto {
+  @IsNumber()
+  @IsEnum(UserStatus)
+  Status: number;
 }
