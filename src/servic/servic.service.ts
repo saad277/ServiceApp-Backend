@@ -16,4 +16,8 @@ export class ServicService {
   createService(service: ServiceCreateDto) {
     return this.serviceRepository.createService(service, this.request.user);
   }
+
+  deleteService(id: number) {
+    return this.serviceRepository.deleteService(id, this.request.user);
+  }
 }

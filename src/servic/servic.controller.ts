@@ -1,5 +1,15 @@
-import { Controller, Post, Body, Get, UseGuards, Req } from '@nestjs/common';
-import { ApiBody, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  UseGuards,
+  Req,
+  Param,
+  Delete,
+  ParseIntPipe,
+} from '@nestjs/common';
+import { ApiBody, ApiBearerAuth, ApiTags, ApiParam } from '@nestjs/swagger';
 
 import { ServicService } from './servic.service';
 import { ServiceCreateDto } from './dto/service-create.dto';
@@ -22,5 +32,13 @@ export class ServicController {
   @Post('/create')
   createService(@Body() body: ServiceCreateDto) {
     return this.serviceService.createService(body);
+  }
+
+  @ApiParam({ name: 'id', required: true })
+  @Roles(UserRoles.Admin)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Delete('/delete/:id')
+  deleteService(@Param('id', ParseIntPipe) id: number) {
+    return this.serviceService.deleteService(id);
   }
 }
