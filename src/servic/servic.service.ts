@@ -20,4 +20,8 @@ export class ServicService {
   deleteService(id: number) {
     return this.serviceRepository.deleteService(id, this.request.user);
   }
+
+  serviceDetails(id: number) {
+    return this.serviceRepository.getServiceDetails(id, this.request.user);
+  }
 }

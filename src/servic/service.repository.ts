@@ -36,7 +36,7 @@ export class ServiceRepository extends Repository<Service> {
       if (service.CreatedBy === user.Id) {
         return service;
       }
-      throw new UnauthorizedException();
+     
     }
 
     throw new NotFoundException();

@@ -41,4 +41,12 @@ export class ServicController {
   deleteService(@Param('id', ParseIntPipe) id: number) {
     return this.serviceService.deleteService(id);
   }
+
+  @ApiParam({ name: 'id', required: true })
+  @Roles(UserRoles.Admin)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get('/details/:id')
+  serviceDetails(@Param('id', ParseIntPipe) id: number) {
+    return this.serviceService.serviceDetails(id);
+  }
 }
